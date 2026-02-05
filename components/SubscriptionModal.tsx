@@ -129,7 +129,7 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ userEmail, userNa
             <svg className="w-10 h-10 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
           </div>
           <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-4 leading-none">DISPOSITIVO <br/> <span className="text-rose-600">IDENTIFICADO</span></h2>
-          <p className="text-zinc-400 text-[10px] font-bold uppercase tracking-widest leading-relaxed italic mb-10">Ops! Identificamos que este aparelho já aproveitou os 30 dias grátis anteriormente. <br/><br/>Para continuar assistindo, escolha um de nossos planos VIP Ilimitados abaixo.</p>
+          <p className="text-zinc-400 text-[10px] font-bold uppercase tracking-widest leading-relaxed italic mb-10">Ops! Identificamos que este aparelho já aproveitou os 7 dias grátis anteriormente. <br/><br/>Para continuar assistindo, escolha um de nossos planos VIP Ilimitados abaixo.</p>
           <button onClick={() => setShowBannedDevice(false)} className="w-full bg-rose-600 text-white py-4 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] italic shadow-xl shadow-rose-600/20 active:scale-95 transition-all">VER PLANOS DISPONÍVEIS</button>
         </div>
       </div>
