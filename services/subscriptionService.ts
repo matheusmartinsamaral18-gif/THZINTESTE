@@ -1,4 +1,3 @@
-
 import { db } from './firebaseService';
 import { doc, getDoc, setDoc, Timestamp, updateDoc } from 'firebase/firestore';
 import { Subscription, Plan } from '../types';
@@ -7,7 +6,7 @@ const MP_ACCESS_TOKEN = 'APP_USR-2989723818850143-011423-e34090c1386086e2ca8c3da
 const PROXY_URL = 'https://corsproxy.io/?'; 
 
 export const PLANS: Plan[] = [
-  { id: 'free_trial', name: '30 Dias Grátis', price: 0.00, durationDays: 30, description: 'Teste Premium Gratuito (Categorias Limitadas)' },
+  { id: 'free_trial', name: '7 Dias Grátis', price: 0.00, durationDays: 7, description: 'Teste Premium Gratuito (Categorias Limitadas)' },
   { id: '7_days', name: 'VIP 7 Dias', price: 7.90, durationDays: 7, description: 'Acesso Semanal Ilimitado' },
   { id: '15_days', name: 'VIP 15 Dias', price: 12.90, durationDays: 15, description: 'Acesso Quinzenal Ilimitado' },
   { id: '30_days', name: 'VIP 30 Dias', price: 19.90, durationDays: 30, description: 'Plano Popular Ilimitado' },
@@ -22,7 +21,6 @@ const getSubscriptionDocId = (email: string) => {
 
 /**
  * Gera um ID único para o aparelho baseado em características do hardware e navegador.
- * Isso ajuda a evitar que o usuário use múltiplos emails para ter trials infinitos.
  */
 export const getDeviceFingerprint = (): string => {
   const nav = window.navigator;
@@ -86,9 +84,6 @@ export const subscriptionService = {
     return null;
   },
 
-  /**
-   * Verifica se este dispositivo físico já utilizou um período de trial.
-   */
   isDeviceBannedFromTrial: async (deviceId: string): Promise<boolean> => {
     try {
       const docRef = doc(db, "trial_devices", deviceId);
@@ -101,7 +96,7 @@ export const subscriptionService = {
   },
 
   incrementTrialUsage: async (email: string, currentSub: Subscription) => {
-    if (currentSub.planType !== '30 Dias Grátis') return;
+    if (currentSub.planType !== '7 Dias Grátis') return;
 
     const today = new Date().toISOString().split('T')[0];
     const docId = getSubscriptionDocId(email);
@@ -143,7 +138,6 @@ export const subscriptionService = {
       subData.lastUsageDate = new Date().toISOString().split('T')[0];
       subData.registeredDeviceId = deviceId;
 
-      // Registra o aparelho na lista negra de trials
       try {
         const deviceRef = doc(db, "trial_devices", deviceId);
         await setDoc(deviceRef, {
