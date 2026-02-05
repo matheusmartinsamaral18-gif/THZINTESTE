@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { BACKDROP_BASE_URL, IMAGE_BASE_URL, tmdbService } from '../services/tmdbService';
 import { Movie, ContinueWatchingItem } from '../types';
@@ -150,9 +149,8 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({
 
     if (isTrial) {
        const isAsianContent = movie.origin_country?.some((c: string) => ['KR', 'JP', 'CN', 'TH'].includes(c));
-       const isSaga = !!fullDetails?.belongs_to_collection || activeSubTab === 'Sagas';
-
-       if (isChannel || isSoapOpera || isAsianContent || isSaga || activeTab === 'Canais Kids' || activeSubTab === 'Sagas' || activeSubTab === 'Animes' || activeSubTab === 'Doramas') {
+       // Sagas (belongs_to_collection) agora são grátis para trial. Removido o bloqueio.
+       if (isChannel || isSoapOpera || isAsianContent || activeTab === 'Canais Kids' || activeSubTab === 'Animes' || activeSubTab === 'Doramas') {
           if (onRequestVip) onRequestVip();
           return;
        }
