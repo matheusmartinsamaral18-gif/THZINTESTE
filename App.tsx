@@ -62,7 +62,7 @@ const App: React.FC = () => {
   }, [subscription]);
 
   const isTrial = useMemo(() => {
-    return subscription?.planType === '30 Dias Grátis';
+    return subscription?.planType === '7 Dias Grátis';
   }, [subscription]);
 
   const isExpiredTrial = useMemo(() => {
@@ -100,7 +100,6 @@ const App: React.FC = () => {
     return () => { authUnsubscribe(); if (unsubscribeSub) unsubscribeSub(); };
   }, []);
 
-  // LÓGICA DE PERSISTÊNCIA REFORÇADA COM ONSNAPSHOT
   useEffect(() => {
     if (sanitizedEmail && selectedProfile) {
       setHasLoadedContent(false);
@@ -199,7 +198,6 @@ const App: React.FC = () => {
     const docId = `${sanitizedEmail}_${selectedProfile.id}`;
     const docRef = doc(db, "user_content", docId);
     
-    // Buscar estado mais atual do banco antes de salvar para evitar conflitos
     const docSnap = await getDoc(docRef);
     const currentList = docSnap.exists() ? (docSnap.data().myList || []) : myList;
 
@@ -218,7 +216,6 @@ const App: React.FC = () => {
       ? currentList.filter((m: any) => m.id !== movie.id) 
       : [movieSimple, ...currentList];
     
-    // Atualizar local para feedback imediato e banco para persistência permanente
     setMyList(newList);
     await setDoc(docRef, { myList: newList }, { merge: true });
   };
@@ -228,7 +225,6 @@ const App: React.FC = () => {
     const docId = `${sanitizedEmail}_${selectedProfile.id}`;
     const docRef = doc(db, "user_content", docId);
 
-    // Buscar estado mais atual do banco antes de salvar para evitar perda ao fechar aba
     const docSnap = await getDoc(docRef);
     const currentWatching = docSnap.exists() ? (docSnap.data().continueWatching || []) : continueWatching;
 
